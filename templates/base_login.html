@@ -1,0 +1,26 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ titulo }}</title>
+    {% tailwind_css %}
+</head>
+<body>
+<div class="h-screen bg-custom-gray flex justify-between">
+    <div>
+       
+    </div>
+    <div class="flex items-center max-w-96 min-w-96 bg-white border rounded-l-3xl shadow-2xl 
+	shadow-black drop-shadow-2xl p-4">
+        <div class="w-full">
+            {% block contenido %}
+
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
