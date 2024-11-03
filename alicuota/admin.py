@@ -1,6 +1,6 @@
 # Register your models here.
 from django.contrib import admin
-from alicuota.models import  Urbanizacion, Manzana,Villa, TipoVivienda, Marca, Modelo, TasaEntrada, TasaInterez, Vivienda, Residente, TipoResidente
+from alicuota.models import  Urbanizacion, Manzana,Villa, TipoVivienda, Marca, Modelo, TasaEntrada, TasaInterez, Vivienda, Residente, TipoResidente, FamiliaPropietario, MiembroFamilia
 from django.contrib.auth.models import Group, User
 
 
@@ -62,6 +62,17 @@ admin.site.register(TasaEntrada,TasaEntradaAdmin)
 class TipoResidenteAdmin(admin.ModelAdmin):
     list_display = ('descripcion',)
 admin.site.register(TipoResidente, TipoResidenteAdmin)
+
+
+# Configuración Urbanización
+class MiembroFamiliaInline(admin.TabularInline):
+    model = MiembroFamilia
+    extra = 2  # Cambia este valor según cuántos formularios adicionales quieras mostrar
+
+class FamiliaPropietarioAdmin(admin.ModelAdmin):
+    inlines = [MiembroFamiliaInline]
+
+admin.site.register(FamiliaPropietario, FamiliaPropietarioAdmin)
 #  Desregistrar los modelos de User y Group
 
 admin.site.unregister(Group)

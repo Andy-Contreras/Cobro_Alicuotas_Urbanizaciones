@@ -1,10 +1,7 @@
-from enum import unique
-from getpass import fallback_getpass
-
 from django.core.exceptions import ValidationError
 from django.db import models
 from main import settings
-
+from alicuota.util import *
 # Modelo Para vehiculo---------------------------------------------------------------------------
 class Marca(models.Model):
     nombre_marca = models.CharField(
@@ -66,6 +63,7 @@ class TipoResidente(models.Model):
     def __str__(self):
         return self.descripcion
 # Modelo Residente ---------------------------------------------------------------------------------
+
 class Residente(models.Model):
     tipo_residente = models.ForeignKey(
         TipoResidente, on_delete=models.CASCADE,
@@ -91,7 +89,7 @@ class Residente(models.Model):
         max_length=10,
         verbose_name="Teléfono",
         blank=False,
-        null=False, unique=True
+        null=False, unique=True,validators=[solo_numeros_validator]
     )
     email = models.EmailField(
         max_length=50,
@@ -103,11 +101,21 @@ class Residente(models.Model):
         max_length=10,
         verbose_name="Cédula",
         blank=False,
-        null=False, unique=True
+        null=False, unique=True, validators=[validar_cedula_ecuatoriana, solo_numeros_validator],
     )
+    # Nuevo campo status para indicar si es residente o cliente
+    status = models.BooleanField(
+        default=True,  # True indica que es residente, False indica que es cliente
+        verbose_name="Estado",
+    )
+    
+    def get_status_display(self):
+        return "Residente" if self.status else "Cliente"
 
     def __str__(self):
-        return f"{self.nombre} ({self.cedula})"  # Puedes ajustar esto según cómo quieras que se muestre
+        vehiculo_texto = 'Con vehículo' if self.vehiculo else "Sin vehículo"
+        return f"{self.nombre} ({self.cedula}) - Vehículo: {vehiculo_texto} - {self.get_status_display()}"
+
 
 
 # Modelo Urbanizacion
@@ -200,3 +208,21 @@ class Vivienda(models.Model):
 
 
 
+# Model familia residente
+class FamiliaPropietario(models.Model):
+    residente = models.ForeignKey(Residente, on_delete=models.CASCADE)
+    descripcion = models.CharField(max_length=50, blank=False, null=False)
+
+    def __str__(self):
+        return f"Familia de {self.residente}"
+
+class MiembroFamilia(models.Model):
+    familia = models.ForeignKey(FamiliaPropietario, on_delete=models.CASCADE, related_name="miembros")
+    nombre = models.CharField(max_length=50, blank=False, null=False)
+    cedula = models.CharField(max_length=10, unique=True, null=False, blank=False)
+    sexo = models.CharField(max_length=50, blank=False, null=False)
+    fecha_nacimiento = models.DateField(blank=False, null=False)
+    parentesco = models.CharField(max_length=50, blank=False, null=False)
+
+    def __str__(self):
+        return f"{self.nombre} ({self.parentesco})"

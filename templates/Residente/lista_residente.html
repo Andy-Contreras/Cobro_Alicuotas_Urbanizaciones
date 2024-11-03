@@ -1,17 +1,21 @@
 {% extends 'listado.html' %}
+
 {% block th %}
-	<th class="border border-gray-200 px-4 py-2  font-bell text-gray-600">Nombres</th>
-	<th class="border border-gray-200 px-6 py-3  font-bell text-gray-600">Cédula</th>
-	<th class="border border-gray-200 px-6 py-3  font-bell text-gray-600">Correo</th>
-	<th class="border border-gray-200 px-6 py-3  font-bell text-gray-600">Teléfono</th>
-	<th class="border border-gray-200 px-6 py-3  font-bell text-gray-600">Tipo Residente</th>
-	<th class="border border-gray-200 px-6 py-3  font-bell text-gray-600">Vehículo</th>
+    <th class="border-b-2 border-gray-300 px-4 py-3 text-left font-bold text-gray-700 uppercase tracking-wide bg-gradient-to-r from-gray-100 to-gray-200">Nombres</th>
+    <th class="border-b-2 border-gray-300 px-4 py-3 text-left font-bold text-gray-700 uppercase tracking-wide bg-gradient-to-r from-gray-100 to-gray-200">Cédula</th>
+    <th class="border-b-2 border-gray-300 px-4 py-3 text-center font-bold text-gray-700 uppercase tracking-wide bg-gradient-to-r from-gray-100 to-gray-200">Correo</th>
+    <th class="border-b-2 border-gray-300 px-4 py-3 text-left font-bold text-gray-700 uppercase tracking-wide bg-gradient-to-r from-gray-100 to-gray-200">Teléfono</th>
+    <th class="border-b-2 border-gray-300 px-4 py-3 text-center font-bold text-gray-700 uppercase tracking-wide bg-gradient-to-r from-gray-100 to-gray-200">Tipo Residente</th>
+    <th class="border-b-2 border-gray-300 px-4 py-3 text-left font-bold text-gray-700 uppercase tracking-wide bg-gradient-to-r from-gray-100 to-gray-200">Vehículo</th>
+    <th class="border-b-2 border-gray-300 px-4 py-3 text-left font-bold text-gray-700 uppercase tracking-wide bg-gradient-to-r from-gray-100 to-gray-200">Estatus</th>  
 {% endblock %}
+
 {% block td %}
-	<td class="px-6 py-4 text-gray-800">{{ object.nombre }}</td>
-	<td class="px-6 py-4 text-gray-500">{{ object.cedula }}</td>
-	<td class="px-6 py-4 text-gray-500">{{ object.email }}</td>
-	<td class="px-6 py-4 text-gray-500">{{ object.telefono }}</td>
-	<td class="px-6 py-4 text-gray-500">{{ object.tipo_residente }}</td>
-    <td class="px-6 py-4 text-gray-500">{{ object.vehiculo }}</td>
+    <td class="px-4 py-4 text-gray-800 bg-white border-b border-gray-200 transition duration-300 ease-in-out hover:bg-gray-100 hover:shadow-sm">{{ object.nombre }}</td>
+    <td class="px-4 py-4 text-gray-600 bg-white border-b border-gray-200 transition duration-300 ease-in-out hover:bg-gray-100 hover:shadow-sm">{{ object.cedula }}</td>
+    <td class="px-4 py-4 text-gray-600 bg-white border-b border-gray-200 transition duration-300 ease-in-out hover:bg-gray-100 hover:shadow-sm">{{ object.email }}</td>
+    <td class="px-4 py-4 text-gray-600 bg-white border-b border-gray-200 transition duration-300 ease-in-out hover:bg-gray-100 hover:shadow-sm">{{ object.telefono }}</td>
+    <td class="px-4 py-4 text-gray-600 bg-white border-b border-gray-200 transition duration-300 ease-in-out hover:bg-gray-100 hover:shadow-sm">{{ object.tipo_residente }}</td>
+    <td class="px-4 py-4 text-gray-600 bg-white border-b border-gray-200 transition duration-300 ease-in-out hover:bg-gray-100 hover:shadow-sm">{{ object.vehiculo|default:"Sin vehículo" }}</td>
+    <td class="px-4 py-4 text-gray-600 bg-white border-b border-gray-200 transition duration-300 ease-in-out hover:bg-gray-100 hover:shadow-sm">{{ object.get_status_display }}</td>  
 {% endblock %}

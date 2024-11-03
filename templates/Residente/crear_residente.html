@@ -1,8 +1,9 @@
 {% extends 'crear.html' %}
 {% load static %}
+
 {% block formulario %}
     <div class="w-full border border-gray-300 p-2 rounded-md">
-        <label for="nombres" class="block text-lg font-bell mb-2">Nombre</label>
+        <label for="nombre" class="block text-lg font-bell mb-2">Nombre</label>
         {{ form.nombre }}
     </div>
     {% if form.cedula.errors %}
@@ -48,11 +49,15 @@
         {{ form.telefono }}
     </div>
     <div class="w-full border border-gray-300 p-2 rounded-md">
-        <label for="telefono" class="block text-lg font-bell mb-2">Tipo Residente</label>
+        <label for="tipo_residente" class="block text-lg font-bell mb-2">Tipo Residente</label>
         {{ form.tipo_residente }}
     </div>
     <div class="w-full border border-gray-300 p-2 rounded-md">
-        <label for="telefono" class="block text-lg font-bell mb-2">Vehículos</label>
+        <label for="vehiculo" class="block text-lg font-bell mb-2">Vehículos</label>
         {{ form.vehiculo }}
+    </div>
+    <div class="w-full border border-gray-300 p-2 rounded-md">
+        <label for="status" class="block text-lg font-bell mb-2">Estado</label>
+        {{ form.status }}  <!-- Aquí agregamos el campo para el estado -->
     </div>
 {% endblock %}

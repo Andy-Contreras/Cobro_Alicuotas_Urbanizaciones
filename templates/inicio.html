@@ -5,7 +5,7 @@
             <h1 class="text-left font-bold text-2xl uppercase">{{ titulo }}</h1>
             <div class="flex items-center space-x-4">
                 <i class="bi bi-person-circle text-2xl"></i>
-                <span class="font-semibold">{{ user }}</span>
+                <span class="font-semibold uppercase">{{ user }}</span>
                 <div class="text-custom-green hover:text-green-600 cursor-pointer transition-transform duration-300 transform hover:rotate-180">
                     <a href="{% url 'admin:index' %}">
                         <i class="bi bi-gear-fill text-2xl"></i>
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-      
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
             <!-- Tarjeta 1 -->
@@ -66,8 +66,9 @@
         <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                 <h2 class="text-xl font-bold text-gray-800 text-center mb-4">Estadísticas (Barras)</h2>
-                <canvas id="barChart" class="mx-auto" width="400" height="200"></canvas>
+                <canvas id="barChart" class="mx-auto max-w-full" width="400" height="200"></canvas>
             </div>
         </div>
+
     </div>
 {% endblock %}
