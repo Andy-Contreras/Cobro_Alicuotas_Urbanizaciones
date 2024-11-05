@@ -2,6 +2,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from main import settings
 from alicuota.util import *
+
+
 # Modelo Para vehiculo---------------------------------------------------------------------------
 class Marca(models.Model):
     nombre_marca = models.CharField(
@@ -11,6 +13,7 @@ class Marca(models.Model):
 
     def __str__(self):
         return self.nombre_marca
+
 
 class Modelo(models.Model):
     nombre_modelo = models.CharField(
@@ -51,6 +54,7 @@ class Vehiculo(models.Model):
     def __str__(self):
         return f"{self.placa} - {self.modelo}"
 
+
 # Modelo de TipoResidente----------------------------------------------------------------
 class TipoResidente(models.Model):
     descripcion = models.CharField(
@@ -62,6 +66,8 @@ class TipoResidente(models.Model):
 
     def __str__(self):
         return self.descripcion
+
+
 # Modelo Residente ---------------------------------------------------------------------------------
 
 class Residente(models.Model):
@@ -89,7 +95,7 @@ class Residente(models.Model):
         max_length=10,
         verbose_name="Teléfono",
         blank=False,
-        null=False, unique=True,validators=[solo_numeros_validator]
+        null=False, unique=True, validators=[solo_numeros_validator]
     )
     email = models.EmailField(
         max_length=50,
@@ -108,14 +114,13 @@ class Residente(models.Model):
         default=True,  # True indica que es residente, False indica que es cliente
         verbose_name="Estado",
     )
-    
+
     def get_status_display(self):
         return "Residente" if self.status else "Cliente"
 
     def __str__(self):
         vehiculo_texto = 'Con vehículo' if self.vehiculo else "Sin vehículo"
         return f"{self.nombre} ({self.cedula}) - Vehículo: {vehiculo_texto} - {self.get_status_display()}"
-
 
 
 # Modelo Urbanizacion
@@ -133,21 +138,23 @@ class Urbanizacion(models.Model):
 
 # Modelo de Manzana
 class Manzana(models.Model):
-    urbanizacion = models.ForeignKey(Urbanizacion, on_delete=models.CASCADE,blank = False,
-        null = False )
+    urbanizacion = models.ForeignKey(Urbanizacion, on_delete=models.CASCADE, blank=False,
+                                     null=False)
     codigo_manzana = models.CharField(max_length=50, blank=False, null=False)
 
     def __str__(self):
         return self.codigo_manzana
 
+
 # Modelo de Villa
 class Villa(models.Model):
-    manzana = models.ForeignKey(Manzana, on_delete=models.CASCADE,blank = False,
-        null = False )
+    manzana = models.ForeignKey(Manzana, on_delete=models.CASCADE, blank=False,
+                                null=False)
     numero_villa = models.CharField(max_length=50, blank=False, null=False, unique=True)
 
     def __str__(self):
         return f'{self.numero_villa} - {self.manzana.codigo_manzana}'
+
 
 # Modeo Tipo Vivienda
 class TipoVivienda(models.Model):
@@ -168,6 +175,7 @@ class TasaInterez(models.Model):
     def __str__(self):
         return f"{self.porcentaje}%"
 
+
 # Modelo Tasa de Entrada
 class TasaEntrada(models.Model):
     porcentaje = models.IntegerField()
@@ -178,6 +186,7 @@ class TasaEntrada(models.Model):
 
     def __str__(self):
         return f"{self.porcentaje}%"
+
 
 # Modelo Vivienda
 class Vivienda(models.Model):
@@ -206,8 +215,6 @@ class Vivienda(models.Model):
         return "Ocupada" if self.estado else "Disponible"
 
 
-
-
 # Model familia residente
 class FamiliaPropietario(models.Model):
     residente = models.ForeignKey(Residente, on_delete=models.CASCADE)
@@ -215,6 +222,7 @@ class FamiliaPropietario(models.Model):
 
     def __str__(self):
         return f"Familia de {self.residente}"
+
 
 class MiembroFamilia(models.Model):
     familia = models.ForeignKey(FamiliaPropietario, on_delete=models.CASCADE, related_name="miembros")
@@ -226,3 +234,32 @@ class MiembroFamilia(models.Model):
 
     def __str__(self):
         return f"{self.nombre} ({self.parentesco})"
+
+
+# Modeo Alicuota - Cabecera de la alicuota
+class CabAlicuota(models.Model):
+    vivienda = models.ForeignKey(Vivienda, on_delete=models.CASCADE)
+    Interes = models.ForeignKey(TasaInterez, on_delete=models.CASCADE)
+    entrada_tasa = models.ForeignKey(TasaEntrada, on_delete=models.CASCADE)
+    pago_inicial = models.DecimalField(max_digits=10, decimal_places=2)
+    saldo_pagar = models.IntegerField()
+    fecha_creacion = models.DateField()
+    fecha_pago = models.CharField(max_length=50, blank=False, null=False)
+    periodo = models.IntegerField()# Las letras que se van a diferir en la alicuota
+    monto = models.DecimalField(max_digits=10, decimal_places=2)# Monto que se trae de la vivienda
+    saldo_financiar = models.DecimalField(max_digits=10, decimal_places=2)
+    saldo_pendiente = models.DecimalField(max_digits=10, decimal_places=2)# Saldo Pendiente de las letras que se van cancelando
+
+    def __str__(self):
+        return f"{self.nombre} ({self.monto})({self.tasa_interez})({self.periodo})"
+
+# Detalle alicuota
+class DetAlicuota(models.Model):
+    cab_alicuota = models.ForeignKey(CabAlicuota, on_delete=models.CASCADE)
+    secuencia = models.IntegerField()
+    fecha = models.DateField()
+    fecha_vencimiento = models.DateField()
+    recargo = models.DecimalField(max_digits=10, decimal_places=2)
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+    saldo_pagar = models.DecimalField(max_digits=10, decimal_places=2)
+    estado = models.DecimalField(max_digits=10, decimal_places=2)

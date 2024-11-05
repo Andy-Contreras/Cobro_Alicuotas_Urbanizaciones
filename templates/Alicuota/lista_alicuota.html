@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block contenido %}
+<div class="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg mb-8">
+    <p class="text-center font-bell text-2xl pb-4">Lista de Alicuotas</p>
+
+    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+        <div class="flex w-full sm:w-auto">
+            <input type="text" placeholder="Buscar residentes..."
+                class="w-full sm:w-80 px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+            <button class="bg-indigo-600 text-white px-4 py-2 rounded-r-md hover:bg-indigo-500">Buscar</button>
+        </div>
+        <a href="{{ url_crear }}" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-500">Crear
+            Alicuota
+        </a>
+    </div>
+
+    <div class="overflow-y-auto border border-gray-200 rounded-lg h-full">
+        <table class="min-w-full table-auto border-collapse">
+            <thead>
+                <tr class="bg-gray-50">
+                    <th class="border-b border-gray-200 px-6 py-3 font-bell text-gray-600">Nombre Residente</th>
+                    <th class="border-b border-gray-200 px-6 py-3 font-bell text-gray-600">Monto</th>
+                    <th class="border-b border-gray-200 px-6 py-3 font-bell text-gray-600">Periodo</th>
+                    <th class="border-b border-gray-200 px-6 py-3 font-bell text-gray-600">Interez</th>
+                    <th class="border-b border-gray-200 px-6 py-3 font-bell text-gray-600">Opciones</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 text-center">
+                <tr>
+                    <td class="px-6 py-4 text-gray-800">Danny Torres</td>
+                    <td class="px-6 py-4 text-gray-500">$ 3000,00</td>
+                    <td class="px-6 py-4 text-gray-500">10 meses</td>
+                    <td class="px-6 py-4 text-gray-500">40%</td>
+                    <td class="flex justify-center gap-2">
+                        <button class="bg-red-500 text-white px-2 py-2 rounded-md hover:bg-red-600">Detalle
+                        </button>
+                        <button class="bg-emerald-600 text-white px-2 py-2 rounded-md hover:bg-emerald-700">Editar
+                        </button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

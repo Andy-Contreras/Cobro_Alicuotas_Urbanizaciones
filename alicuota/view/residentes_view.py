@@ -82,3 +82,6 @@ class ResidenteUpdateView(LoginRequiredMixin, UpdateView):
         context['action_save'] = self.request.path
         context['cancel_url'] = reverse_lazy('residente_lista')
         return context
+
+
+

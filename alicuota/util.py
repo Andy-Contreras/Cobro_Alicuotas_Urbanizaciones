@@ -1,8 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 
-
-
 def validar_cedula_ecuatoriana(cedula):
     if len(cedula) != 10 or not cedula.isdigit():
         raise ValidationError("La cédula debe tener 10 dígitos numéricos.")

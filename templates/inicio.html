@@ -1,74 +1,116 @@
 {% extends 'base.html' %}
 {% block contenido %}
-    <div class="max-w-5xl mx-auto rounded-lg p-6 mt-4">
-        <div class="flex justify-between items-center pb-4">
-            <h1 class="text-left font-bold text-2xl uppercase">{{ titulo }}</h1>
-            <div class="flex items-center space-x-4">
-                <i class="bi bi-person-circle text-2xl"></i>
-                <span class="font-semibold uppercase">{{ user }}</span>
-                <div class="text-custom-green hover:text-green-600 cursor-pointer transition-transform duration-300 transform hover:rotate-180">
-                    <a href="{% url 'admin:index' %}">
-                        <i class="bi bi-gear-fill text-2xl"></i>
-                    </a>
-                </div>
+<div class="max-w-5xl mx-auto rounded-lg p-6 mt-4">
+    <div class="flex justify-between items-center pb-4">
+        <h1 class="text-left font-bold text-2xl uppercase">{{ titulo }}</h1>
+        <div class="flex items-center space-x-4">
+            <i class="bi bi-person-circle text-2xl"></i>
+            <span class="font-semibold uppercase">{{ user }}</span>
+            <div
+                class="text-custom-green hover:text-green-600 cursor-pointer transition-transform duration-300 transform hover:rotate-180">
+                <a href="{% url 'admin:index' %}">
+                    <i class="bi bi-gear-fill text-2xl"></i>
+                </a>
             </div>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            <!-- Tarjeta 1 -->
-            <div class="bg-gradient-to-br from-cyan-500 to-cyan-700 text-white p-6 rounded-lg shadow-md hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col justify-between h-32 relative overflow-hidden">
-                <i class="bi bi-people-fill text-white opacity-20 text-[9rem] absolute right-2 bottom-0 transform translate-y-1/4 pointer-events-none"></i>
-                <div class="relative z-10">
-                    <h2 class="text-3xl font-bold">{{ residentes }}</h2>
-                    <p class="text-sm font-medium">Residentes</p>
-                </div>
-                <div class="flex justify-between w-full mt-4 items-center relative z-10">
-                    <p class="text-sm font-semibold">Más información</p>
-                    <a href="{% url 'residente_lista' %}" class="text-lg">
-                        <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Tarjeta 2 -->
-            <div class="bg-gradient-to-br from-blue-500 to-blue-700  text-white p-6 rounded-lg shadow-md hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-start justify-between h-32 relative overflow-hidden">
-                <i class="bi bi-house text-white opacity-20 text-[9rem] absolute right-2 bottom-0 transform translate-y-1/4 pointer-events-none"></i>
-                <div>
-                    <h2 class="text-3xl font-bold">{{ viviendas }}</h2>
-                    <p class="text-sm font-medium">Viviendas</p>
-                </div>
-                <div class="flex justify-between w-full mt-4 items-center">
-                    <p class="text-sm font-semibold">Más información</p>
-                    <a href="{% url 'vivienda_lista' %}" class="text-lg">
-                        <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Tarjeta 3 -->
-            <div class="bg-gradient-to-br from-green-500 to-green-700 text-white p-6 rounded-lg shadow-md hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-start justify-between h-32 relative overflow-hidden">
-                <i class="bi bi-cash-coin text-white opacity-20 text-[9rem] absolute right-2 bottom-0 transform translate-y-1/4 pointer-events-none"></i>
-                <div>
-                    <h2 class="text-3xl font-bold">$400.100</h2>
-                    <p class="text-sm font-medium">Finanzas</p>
-                </div>
-                <div class="flex justify-between w-full mt-4 items-center">
-                    <p class="text-sm font-semibold">Más información</p>
-                    <a href="" class="text-lg">
-                        <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Gráficos estadísticos -->
-        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                <h2 class="text-xl font-bold text-gray-800 text-center mb-4">Estadísticas (Barras)</h2>
-                <canvas id="barChart" class="mx-auto max-w-full" width="400" height="200"></canvas>
-            </div>
-        </div>
-
     </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Tarjeta 1 -->
+        <div
+            class="bg-gradient-to-br from-cyan-500 to-cyan-700 text-white p-6 rounded-lg shadow-md hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col justify-between h-32 relative overflow-hidden">
+            <i
+                class="bi bi-people-fill text-white opacity-20 text-[9rem] absolute right-2 bottom-0 transform translate-y-1/4 pointer-events-none"></i>
+            <div class="relative z-10">
+                <h2 class="text-3xl font-bold">{{ residentes }}</h2>
+                <p class="text-sm font-medium">Residentes</p>
+            </div>
+            <div class="flex justify-between w-full mt-4 items-center relative z-10">
+                <p class="text-sm font-semibold">Más información</p>
+                <a href="{% url 'residente_lista' %}" class="text-lg">
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Tarjeta 2 -->
+        <div
+            class="bg-gradient-to-br from-blue-500 to-blue-700  text-white p-6 rounded-lg shadow-md hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-start justify-between h-32 relative overflow-hidden">
+            <i
+                class="bi bi-house text-white opacity-20 text-[9rem] absolute right-2 bottom-0 transform translate-y-1/4 pointer-events-none"></i>
+            <div>
+                <h2 class="text-3xl font-bold">{{ viviendas }}</h2>
+                <p class="text-sm font-medium">Viviendas</p>
+            </div>
+            <div class="flex justify-between w-full mt-4 items-center">
+                <p class="text-sm font-semibold">Más información</p>
+                <a href="{% url 'vivienda_lista' %}" class="text-lg">
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Tarjeta 3 -->
+        <div
+            class="bg-gradient-to-br from-green-500 to-green-700 text-white p-6 rounded-lg shadow-md hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col items-start justify-between h-32 relative overflow-hidden">
+            <i
+                class="bi bi-cash-coin text-white opacity-20 text-[9rem] absolute right-2 bottom-0 transform translate-y-1/4 pointer-events-none"></i>
+            <div>
+                <h2 class="text-3xl font-bold">$400.100</h2>
+                <p class="text-sm font-medium">Finanzas</p>
+            </div>
+            <div class="flex justify-between w-full mt-4 items-center">
+                <p class="text-sm font-semibold">Más información</p>
+                <a href="" class="text-lg">
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráficos estadísticos -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+            <h2 class="text-xl font-bold text-gray-800 text-center mb-4">Estadísticas (Barras)</h2>
+            <canvas id="barChart" class="mx-auto max-w-full" width="400" height="200"></canvas>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    // Gráfico de Barras
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    const barChart = new Chart(barCtx, {
+        type: 'bar', // Gráfico de barras
+        data: {
+            labels: ['Usuarios Activos', 'Vivienda', 'Propietario'],
+            datasets: [{
+                label: 'Cantidad',
+                data: [20, 80, 50], // Cambia estos valores según tus datos
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 {% endblock %}
