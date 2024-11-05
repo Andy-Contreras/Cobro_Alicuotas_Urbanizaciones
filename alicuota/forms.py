@@ -1,5 +1,6 @@
 from django import forms
 from alicuota.models import *
+from django.forms import modelformset_factory, inlineformset_factory
 import re
 
 
@@ -68,7 +69,7 @@ class VehiculoForm(forms.ModelForm):
 class ResidenteForm(forms.ModelForm):
     class Meta:
         model = Residente
-        fields = ['tipo_residente', 'vehiculo', 'nombre', 'telefono', 'email', 'cedula']
+        fields = ['tipo_residente', 'vehiculo', 'nombre', 'telefono', 'email', 'cedula', 'status']  # Agregar 'status'
         widgets = {
             'tipo_residente': forms.Select(attrs={
                 'class': 'w-full border border-gray-300 p-2 rounded-md',
@@ -84,7 +85,9 @@ class ResidenteForm(forms.ModelForm):
             }),
             'telefono': forms.TextInput(attrs={
                 'class': 'w-full border border-gray-300 p-2 rounded-md',
-                'placeholder': 'Ingrese el Teléfono'
+                'placeholder': 'Ingrese el Teléfono',
+                'oninput': 'validarNumero(this)',  # Agregar evento para validación
+                'maxlength': '10',  # Limitar a 10 caracteres
             }),
             'email': forms.EmailInput(attrs={
                 'class': 'w-full border border-gray-300 p-2 rounded-md',
@@ -92,10 +95,14 @@ class ResidenteForm(forms.ModelForm):
             }),
             'cedula': forms.TextInput(attrs={
                 'class': 'w-full border border-gray-300 p-2 rounded-md',
-                'placeholder': 'Ingrese la Cédula'
+                'placeholder': 'Ingrese la Cédula',
+                'oninput': 'validarNumero(this)',  # Agregar evento para validación
+                'maxlength': '10',  # Limitar a 10 caracteres
+            }),
+            'status': forms.CheckboxInput(attrs={
+                'class': 'form-checkbox h-5 w-5 text-blue-600',
             }),
         }
-
 
 # Formulario Vivienda-------------------------------------------------------------------------
 class ViviendaForm(forms.ModelForm):
@@ -147,3 +154,42 @@ class ViviendaForm(forms.ModelForm):
             }),
         }
 
+
+# Forms Familia Residente
+class FamiliaPropietarioForm(forms.ModelForm):
+    class Meta:
+        model = FamiliaPropietario
+        fields = ['residente', 'descripcion']
+        widgets = {
+            'residente': forms.Select(attrs={
+                'class': 'w-full border border-gray-300 p-2 rounded-md',
+            }),
+            'descripcion': forms.TextInput(attrs={
+                'class': 'w-full border border-gray-300 p-2 rounded-md',
+                'placeholder': 'Descripción de la familia',
+            }),
+        }
+
+
+class MiembroFamiliaForm(forms.ModelForm):
+    class Meta:
+        model = MiembroFamilia
+        fields = ['nombre', 'cedula', 'sexo', 'fecha_nacimiento', 'parentesco']
+        widgets = {
+            'nombre': forms.TextInput(attrs={
+                'class': 'w-full border border-gray-300 p-2 rounded-md',
+            }),
+            'cedula': forms.TextInput(attrs={
+                'class': 'w-full border border-gray-300 p-2 rounded-md',
+            }),
+            'sexo': forms.TextInput(attrs={
+                'class': 'w-full border border-gray-300 p-2 rounded-md',
+            }),
+            'fecha_nacimiento': forms.DateInput(attrs={
+                'class': 'w-full border border-gray-300 p-2 rounded-md',
+                'type': 'date',
+            }, format='%Y-%m-%d'),
+            'parentesco': forms.TextInput(attrs={
+                'class': 'w-full border border-gray-300 p-2 rounded-md',
+            }),
+        }

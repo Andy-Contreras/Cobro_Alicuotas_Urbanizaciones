@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Reporte de Residentes</title>
+    <style>
+        /* Simulando estilos básicos de Tailwind */
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        .table-container {
+            margin: 1.5rem auto;
+            width: 90%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            border: 1px solid #333;
+            text-align: left;
+            font-size: 0.875rem;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        /* Para asegurar que las celdas no se apilen mal */
+        .text-center {
+            text-align: center;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<h1>Lista de Residentes</h1>
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th class="text-left">Nombre</th>
+            <th class="text-left">Cédula</th>
+            <th class="text-center">Correo</th>
+            <th class="text-center">Teléfono</th>
+            <th class="text-left">Tipo Residente</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for object in object_list %}
+            <tr>
+                <td class="text-left">{{ object.nombre }}</td>
+                <td class="text-left">{{ object.cedula }}</td>
+                <td class="text-center">{{ object.email  }}</td>
+                <td class="text-center">{{ object.telefono }}</td>
+                <td class="text-left">{{ object.tipo_residente }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

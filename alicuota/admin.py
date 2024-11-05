@@ -1,6 +1,6 @@
 # Register your models here.
 from django.contrib import admin
-from alicuota.models import  Urbanizacion, Manzana,Villa, TipoVivienda, Marca, Modelo, TasaEntrada, TasaInterez, Vivienda, Residente, TipoResidente
+from alicuota.models import  Urbanizacion, Manzana,Villa, TipoVivienda, Marca, Modelo, TasaEntrada, TasaInterez, TipoResidente
 from django.contrib.auth.models import Group, User
 
 
@@ -24,6 +24,7 @@ class VillaAdmin(admin.ModelAdmin):
     search_fields = ('numero_villa',)
 admin.site.register(Villa, VillaAdmin)
 
+#TipoVivienda
 class TipoViviendaAdmin(admin.ModelAdmin):
     list_display = ('descripcion',)
     search_fields = ('descripcion',)
@@ -62,6 +63,7 @@ admin.site.register(TasaEntrada,TasaEntradaAdmin)
 class TipoResidenteAdmin(admin.ModelAdmin):
     list_display = ('descripcion',)
 admin.site.register(TipoResidente, TipoResidenteAdmin)
+
 #  Desregistrar los modelos de User y Group
 
 admin.site.unregister(Group)

@@ -2,12 +2,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, PasswordResetView
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.views.generic import View
 from django.views.generic import TemplateView
 from django.contrib.auth.models import User
 from django.contrib import messages
 from alicuota.mixins import RetornarInicioMixin
 from alicuota.models import *
-
+from django.template.loader import render_to_string
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from .models import Residente
+import os
 
 # Create your views_system here.
 
@@ -49,3 +55,30 @@ class CustomPasswordResetView(PasswordResetView):
         # Si el correo es válido, continuar con el proceso normal de restablecimiento
         messages.success(request, "Si el correo es correcto, recibirás un enlace para restablecer tu contraseña.")
         return super().post(request, *args, **kwargs)
+
+
+#
+# class GenerarPDFView(View):
+#     def get(self, request, *args,**kwargs):
+#         return HttpResponse('Hello word')
+
+
+class PDFReporteResidenteView(View):
+    def get(self, request, pk, *args, **kwargs):
+        # Obtén la lista de todos los residentes
+        residentes = Residente.objects.all()
+        context = {'object_list': residentes}
+
+        # Renderiza la plantilla a PDF
+        template = get_template('Residente/residente_pdf.html')
+        html = template.render(context)
+        response = HttpResponse(content_type='application/pdf')
+
+        # Genera el PDF usando pisa
+        pisa_status = pisa.CreatePDF(html, dest=response)
+
+        # Si hubo un error, responde con un mensaje
+        if pisa_status.err:
+            return HttpResponse('Error al generar el PDF', status=500)
+
+        return response

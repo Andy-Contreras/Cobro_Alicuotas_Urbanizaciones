@@ -5,8 +5,6 @@ module.exports = {
         '../templates/**/*.html',
         '../../templates/**/*.html',
         '../../**/templates/**/*.html',
-
-        // Descomentar si usas clases de Tailwind en archivos JS y Python
         '../../**/*.js',
         '../../**/*.py'
     ],
@@ -19,11 +17,15 @@ module.exports = {
                 'custom-green': '#2ca444',
                 'custom-red': '#dc3444',
                 'custom-blue': '#087cfc',
+                'custom-purple': '#6b5b95',  // Ejemplo de color personalizado adicional
             },
-            // Opcional: añade pantallas personalizadas
             screens: {
                 'xs': '480px',
                 '3xl': '1600px',
+            },
+            // Otras extensiones que puedes considerar
+            spacing: {
+                '128': '32rem',  // Ejemplo de tamaño personalizado
             },
         },
     },

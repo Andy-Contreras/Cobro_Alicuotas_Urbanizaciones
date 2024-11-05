@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'alicuota.apps.AlicuotaConfig',
     'tailwind',
     'theme',
-    'django_browser_reload'
+    'django_browser_reload',
+    'rest_framework'
 ]
 
 JAZZMIN_SETTINGS = {
